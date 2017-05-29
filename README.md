@@ -445,3 +445,55 @@ npm run build
 ```
 console.log('object spread', _extends({ foo: 0 }));
 ```
+
+## Reactの設定
+
+### Reactのインストール
+
+以下のコマンドを実行し、Reactをインストールします。
+
+```
+npm install --save react react-dom
+```
+
+### Reactの基本ファイルを追加
+
+`~/work/src/bar.js` を追加します。
+
+```
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+
+class Bar extends Component {
+  render() {
+    return <div>Bar</div>;
+  }
+}
+
+export default function app(){
+  const app = document.querySelector('#app');
+  ReactDOM.render(
+    <Bar />,
+    app,
+  );
+}
+```
+
+`~/work/src/index.js` に、以下の2行を追加します
+
+```
+import app from './bar';
+```
+
+```
+app();
+```
+
+### Reactが追加できたか確認
+
+以下のコマンドを実行してブラウザで `http://localhost:9000/` を開き、  
+`Hello, World!` から `Bar` に表示が変わっていれば成功です。
+
+```
+npm start
+```
