@@ -16,3 +16,15 @@ GitHubかBitbucketのどちらかを使うのがオススメです。
 node_modulesディレクトリや、エディタの設定ファイル等をgit管理下から外しておきます。  
 .gitignoreファイルを`~/work/.editorconfig`に追加しておきましょう。  
 ファイルをコピーしてきて配置して構いません。  
+
+# 開発環境構築
+
+## package.json作成
+nodejsのプロジェクト設定ファイルを作成していきます。  
+以下を実行するとpackage.jsonが作られます。  
+
+```
+npm init -y
+```
+
+`npm init`で対話が始まるので、`-y` オプションで全てyesにしています。
