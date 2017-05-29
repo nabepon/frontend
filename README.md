@@ -244,3 +244,34 @@ webpackはjsをビルドするためのツールです。
 ```
 npm install --save-dev webpack webpack-dev-server ejs
 ```
+
+### 最小限のファイルを追加
+`~/work/src` ディレクトリを作成し、その下に3つのファイルを追加してください
+
+
+```
+// index.js
+import foo from './foo';
+foo();
+```
+
+```
+// foo.js
+export default function foo() {
+  document.querySelector('#app').innerHTML = 'Hello, World!';
+}
+```
+
+```
+// index.html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div id="app"></div>
+<script src="/bundle.js"></script>
+</body>
+</html>
+```
