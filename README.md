@@ -239,10 +239,10 @@ webpackはjsをビルドするためのツールです。
 これにより最新のjs構文を使うことができるようになります。  
 
 ### webpackのインストール
-以下を実行し `webpack`, `webpack-dev-server`, `ejs` の3つをインストールします。
+以下を実行し `webpack`, `webpack-dev-server` の2つをインストールします。
 
 ```
-npm install --save-dev webpack webpack-dev-server ejs
+npm install --save-dev webpack webpack-dev-server
 ```
 
 ### 最小限のファイルを追加
@@ -275,3 +275,86 @@ export default function foo() {
 </body>
 </html>
 ```
+
+### webpackの基本設定
+`~/work/webpack/dev.config.js` を作成し、以下の設定をしてください。
+
+```
+const path = require('path');
+const fs = require('fs');
+
+const BUILD_ROOT = path.join(__dirname, '../build');
+const SRC_ROOT = path.join(__dirname, '../src');
+const ASSETS_DIR = 'assets';
+
+module.exports = {
+  context: SRC_ROOT,
+  entry: './index.js',
+  output: {
+    path: BUILD_ROOT,
+    filename: 'bundle.js',
+  },
+  devServer: {
+    contentBase: BUILD_ROOT,
+    watchContentBase: true,
+    compress: true,
+    port: 9000,
+    setup(app) {
+      app.get('*', (req, res, next) => {
+        const url = req.originalUrl;
+        if (url.startsWith(`/${ASSETS_DIR}/`) || url.endsWith('.css') || url.endsWith('.js') || url.endsWith('.json')) {
+          next();
+          return;
+        }
+        fs.readFile(path.join(SRC_ROOT, '/index.html'), 'utf8', (err, data) => {
+          if (err) throw err;
+          res.status(200).send(data);
+        });
+      });
+    },
+  },
+};
+
+```
+
+また、ビルド後のファイルは不要なので、  
+`~/work/.gitignore` に以下を追記します。
+
+```
+build/
+```
+
+また、サーバを起動するためのコマンドとビルドするためのコマンドを  
+package.jsonのscriptsに追加しておきます。
+
+```
+    "build": "webpack --config ./webpack/dev.config.js",
+    "start": "webpack-dev-server --config ./webpack/dev.config.js",
+```
+
+できたら、試してみましょう。
+以下を実行してください。
+
+```
+npm start
+```
+
+ブラウザで `http://localhost:9000/` を開いて、  
+Hello, World!が表示されていれば成功です。  
+これで開発用の簡易サーバが立ち上がりました。 
+ 
+ctrl+cで終了します。  
+
+次に、以下を実行してください。
+
+```
+npm run build
+```
+
+実行後に以下のファイルが生成されていれば成功です。
+
+```
+~/work/build/bundle.js
+```
+
+本番では、このビルド後のファイルを使用します。
