@@ -34,3 +34,31 @@ npm init -y
 http://qiita.com/naru0504/items/82f09881abaf3f4dc171  
 `~/work/.editorconfig` をコピーで構わないので追加しておきましょう。  
 また、使用しているエディタが.editorconfigを認識するよう設定しておいてください。  
+
+## ESLintの追加
+jsはエディタのサポートを受けづらい言語なので、lintツールを使ってサポートしてもらいます。
+セミコロンの抜けチェックや、不要な改行などをチェックすることができます。
+
+### eslintのインストール
+
+```
+npm install --save-dev eslint
+```
+
+インストールできたか確認のため、  
+以下のコマンドでバージョンを確認してみます。  
+
+```
+node_modules/.bin/eslint -v
+```
+
+また、`--save-dev` オプションを付けてインストールしたことで、  
+package.jsonに以下が追加されたことを確認しましょう  
+
+```
+  "devDependencies": {
+    "eslint": "^3.19.0"
+  }
+```
+
+devDependenciesは、開発用のみで使用するパッケージの一覧です。
