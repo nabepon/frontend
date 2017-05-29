@@ -233,3 +233,14 @@ module.exports = {
 
 ### エディタにstylelintを設定
 エディタごとに設定方法はことなりますので、調べて設定しておいてください。
+
+## webpackの設定
+webpackはjsをビルドするためのツールです。  
+これにより最新のjs構文を使うことができるようになります。  
+
+### webpackのインストール
+以下を実行し `webpack`, `webpack-dev-server`, `ejs` の3つをインストールします。
+
+```
+npm install --save-dev webpack webpack-dev-server ejs
+```
