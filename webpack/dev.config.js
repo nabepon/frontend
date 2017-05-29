@@ -5,12 +5,26 @@ const BUILD_ROOT = path.join(__dirname, '../build');
 const SRC_ROOT = path.join(__dirname, '../src');
 const ASSETS_DIR = 'assets';
 
+const babelrc = JSON.parse(fs.readFileSync('.babelrc', 'utf8'));
+const browsers = babelrc.presets.find(preset=>preset[0] === 'env')[1].targets.browsers;
+
 module.exports = {
   context: SRC_ROOT,
   entry: './index.js',
   output: {
     path: BUILD_ROOT,
     filename: 'bundle.js',
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js?$/,
+        exclude: [
+          /node_modules/,
+        ],
+        loader: 'babel-loader',
+      },
+    ],
   },
   devServer: {
     contentBase: BUILD_ROOT,

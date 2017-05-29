@@ -1,0 +1,17 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": [
+          "last 2 versions",
+          "ie >= 9",
+          "safari >= 7",
+          "iOS 8",
+          "Android 4.1"
+        ]
+      }
+    }],
+    "react"
+  ],
+  "plugins": ["transform-object-rest-spread"]
+}

@@ -358,3 +358,90 @@ npm run build
 ```
 
 本番では、このビルド後のファイルを使用します。
+
+## babelの設定
+webpackでbabelを使い、ES2015以降のjs構文が使えるようにします。  
+以下のコマンドを実行し、babelと、babelのpluginをインストールします。
+
+```
+npm install --save-dev babel babel-cli babel-loader babel-preset-env babel-preset-react babel-plugin-transform-object-rest-spread
+```
+
+また、polyfillもインストールします。
+`--save-dev` ではなく `--save` であることに注意してください。
+
+```
+npm install --save babel-polyfill
+```
+
+`~/work/.babelrc` を新規作成します。
+
+```
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": [
+          "last 2 versions",
+          "ie >= 9",
+          "safari >= 7",
+          "iOS 8",
+          "Android 4.1"
+        ]
+      }
+    }],
+    "react"
+  ],
+  "plugins": ["transform-object-rest-spread"]
+}
+```
+
+次に、`~/work/webpack/dev.config.js` の `module.exports` の手前に以下を追記し
+
+```
+const babelrc = JSON.parse(fs.readFileSync('.babelrc', 'utf8'));
+const browsers = babelrc.presets.find(preset=>preset[0] === 'env')[1].targets.browsers;
+```
+
+`module.exports` 内に以下を追記します。
+
+```
+  module: {
+    loaders: [
+      {
+        test: /\.js?$/,
+        exclude: [
+          /node_modules/,
+        ],
+        loader: 'babel-loader',
+      },
+    ],
+  },
+```
+
+追記できたら、試してみましょう。
+`~/work/src/index.js` の1行目に以下を追記し、
+
+```
+import 'babel-polyfill';
+```
+
+`~/work/src/foo.js` の適当な場所に、以下を追記してください。
+
+```
+console.log('object spread', { ...{ foo: 0 } });
+```
+
+次に、以下を実行してビルドします。
+
+```
+npm run build
+```
+
+そして、`~/work/build/bundle.js` を開き、
+追記したconsole.logを探してください。
+以下のように変換されていれば成功です。
+
+```
+console.log('object spread', _extends({ foo: 0 }));
+```
