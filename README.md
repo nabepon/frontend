@@ -28,3 +28,9 @@ npm init -y
 ```
 
 `npm init`で対話が始まるので、`-y` オプションで全てyesにしています。
+
+## .editorconfig用意
+改行コードやインデントのスペース数を設定できる便利設定ファイルです。  
+http://qiita.com/naru0504/items/82f09881abaf3f4dc171  
+`~/work/.editorconfig` をコピーで構わないので追加しておきましょう。  
+また、使用しているエディタが.editorconfigを認識するよう設定しておいてください。  
