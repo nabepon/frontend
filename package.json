@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint \"src/**/*.js\"",
+    "lint-fix": "eslint \"src/**/*.js\" --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -62,3 +62,30 @@ package.jsonに以下が追加されたことを確認しましょう
 ```
 
 devDependenciesは、開発用のみで使用するパッケージの一覧です。
+
+### eslintのショートカットコマンド設定
+eslintをコマンドで使えるように、  
+package.jsonのscriptsに以下を追加します。  
+
+```
+    "lint": "eslint \"src/**/*.js\"",
+    "lint-fix": "eslint \"src/**/*.js\" --fix",
+```
+
+追加すると以下のようになります。  
+
+```
+  "scripts": {
+    "lint": "eslint \"src/**/*.js\"",
+    "lint-fix": "eslint \"src/**/*.js\" --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+```
+
+これにより、今後は以下のコマンドでeslintを実行することができるようになります。  
+
+```
+npm run lint
+npm run lint-fix
+```
+
