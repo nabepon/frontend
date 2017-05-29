@@ -89,3 +89,44 @@ npm run lint
 npm run lint-fix
 ```
 
+### eslintの設定ファイル作成
+設定ファイルを作っていきます。  
+以下のコマンドを実行します。  
+
+```
+node_modules/.bin/eslint --init
+```
+
+すると、以下のメッセージが表示されます。  
+
+```
+> Answer questions about your style
+  Use a popular style guide 
+  Inspect your JavaScript file(s) 
+```
+
+上下キーで`Use a popular style guide`を選択して、enterを押してください。  
+
+```
+  Answer questions about your style
+> Use a popular style guide 
+  Inspect your JavaScript file(s) 
+```
+
+`Which style guide do you want to follow? ` と聞かれるので  
+`Airbnb` を選択してください。  
+
+`Do you use React? ` と聞かれるので  
+`y` を入力してenterを押してください。  
+
+`What format do you want your config file to be in?`と聞かれるので  
+`JavaScript` を選択してください。  
+
+これでインストールが開始し、終わると以下のファイルが生成されます。  
+
+```
+~/work/.eslintrc.js
+```
+
+また、package.jsonのdevDependenciesに、  
+eslintのプラグインが追加されているので、合わせて確認しておきましょう。  
