@@ -130,3 +130,40 @@ node_modules/.bin/eslint --init
 
 また、package.jsonのdevDependenciesに、  
 eslintのプラグインが追加されているので、合わせて確認しておきましょう。  
+
+### eslintの設定を拡張
+eslintそのままだと、global変数やflowtypeに対応していないので、
+よく使う設定を追記しておきます。
+
+以下のコマンドでeslint用のflowtypeプラグインをインストールします。
+
+```
+npm install --save-dev babel-eslint eslint-plugin-flowtype
+```
+
+次に、`~/work/.eslintrc.js` を以下のようにします。
+
+```
+module.exports = {
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
+  "globals": {
+    "__DEVELOPMENT__": true
+  },
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import",
+    "flowtype"
+  ]
+};
+```
