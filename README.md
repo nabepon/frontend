@@ -207,3 +207,26 @@ package.jsonのscriptsに以下を追加します。
 npm run stylelint
 npm run stylefmt
 ```
+
+### stylelintの設定ファイル作成
+設定ファイルを作っていきます。  
+以下のコマンドを実行します。  
+
+`~/work/stylelint.config.js` を作成し、以下の設定をしてください。
+
+```
+const idiomatic = require('stylelint-config-idiomatic-order');
+const idiomaticRules = idiomatic.rules['order/properties-order'] || idiomatic.rules['declaration-block-properties-order'];
+module.exports = {
+  extends: [
+    'stylelint-config-standard',
+    'stylelint-config-recess-order',
+  ],
+  plugins: [
+    'stylelint-order',
+  ],
+  rules: {
+    'order/properties-order': idiomaticRules,
+  },
+};
+```
