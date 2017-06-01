@@ -191,3 +191,19 @@ node_modules/.bin/stylefmt -v
 
 また、`--save-dev` オプションを付けてインストールしたことで、  
 package.jsonのstylelintにインストールしたpackageが追加されているか確認しておきましょう。  
+
+### stylelint stylefmtのショートカットコマンド設定
+stylelintをコマンドで使えるように、  
+package.jsonのscriptsに以下を追加します。  
+
+```
+    "stylelint": "stylelint \"src/**/*.scss\"",
+    "stylefmt": "stylefmt -r \"src/**/*.scss\"",
+```
+
+これにより、今後は以下のコマンドでstylelintを実行することができるようになります。  
+
+```
+npm run stylelint
+npm run stylefmt
+```

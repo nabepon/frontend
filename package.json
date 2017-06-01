@@ -6,6 +6,8 @@
   "scripts": {
     "lint": "eslint \"src/**/*.js\"",
     "lint-fix": "eslint \"src/**/*.js\" --fix",
+    "stylelint": "stylelint \"src/**/*.scss\"",
+    "stylefmt": "stylefmt -r \"src/**/*.scss\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
