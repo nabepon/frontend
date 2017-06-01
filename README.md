@@ -170,3 +170,24 @@ module.exports = {
 
 ### エディタにeslintを設定
 エディタごとに設定方法はことなりますので、調べて設定しておいてください。
+
+## stylelint stylefmtの追加
+cssも同じようにlintを設定していくます。  
+stylelintだけでは自動修正できないので、eslintの--fix相当の機能にstylefmtを使います。  
+
+### stylelint stylefmtと拡張のインストール
+
+```
+npm install --save-dev stylefmt stylelint stylelint-config-idiomatic-order stylelint-config-recess-order stylelint-config-standard stylelint-order
+```
+
+インストールできたか確認のため、  
+以下のコマンドでバージョンを確認してみます。  
+
+```
+node_modules/.bin/stylelint -v
+node_modules/.bin/stylefmt -v
+```
+
+また、`--save-dev` オプションを付けてインストールしたことで、  
+package.jsonのstylelintにインストールしたpackageが追加されているか確認しておきましょう。  
