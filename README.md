@@ -508,3 +508,26 @@ CSS Modulesを使えるようにします。
 ```
 npm install --save-dev webpack-isomorphic-tools node-sass extract-text-webpack-plugin style-loader css-loader sass-loader postcss-loader url-loader autoprefixer autoprefixer-loader
 ```
+
+### CSSの基本ファイルを追加
+
+`~/work/src/index.html` に、以下を追記します。
+
+```
+<link rel="stylesheet" href="/bundle.css">
+```
+
+`~/work/src/bar.scss` を追加します。
+
+```
+.bar {
+  background-color: #d7d7d7;
+}
+```
+
+`~/work/src/bar.js` に、以下を追記します。
+
+```
+import css from './bar.scss';
+```
+

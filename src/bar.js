@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import css from './bar.scss';
 
 class Bar extends Component {
   render() {
