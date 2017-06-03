@@ -506,7 +506,7 @@ CSS Modulesを使えるようにします。
 以下のコマンドを実行し、CSS Modulesに必要なものをインストールします。
 
 ```
-npm install --save-dev webpack-isomorphic-tools node-sass extract-text-webpack-plugin style-loader css-loader sass-loader postcss-loader url-loader autoprefixer autoprefixer-loader
+npm install --save-dev webpack-isomorphic-tools node-sass extract-text-webpack-plugin style-loader css-loader sass-loader postcss-loader url-loader autoprefixer autoprefixer-loader file-loader
 ```
 
 ### CSSの基本ファイルを追加
@@ -531,3 +531,134 @@ npm install --save-dev webpack-isomorphic-tools node-sass extract-text-webpack-p
 import css from './bar.scss';
 ```
 
+### webpackの設定を追加
+
+また `~/work/src/bar.js` のdivにclassNameを追記します。
+
+```
+<div>Bar</div>;
+↓
+<div className={css.bar}>Bar</div>;
+```
+
+`~/work/webpack/dev.config.js` に以下を追記します。
+
+```
+const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools')());
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+```
+
+また、loadersに以下を追記します
+
+```
+
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 2,
+                sourceMap: true,
+                localIdentName: '[local]___[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                plugins: [
+                  require('autoprefixer')({ browsers: browsers }),
+                ],
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                outputStyle: 'expanded',
+                sourceMap: true,
+              },
+            },
+          ],
+        }),
+      },
+      {
+        test: /\.svg$/,
+        loader: 'url-loader',
+        options: {
+          name: `./${ASSETS_DIR}/[name]-[hash].[ext]`,
+          limit: 10000,
+          mimetype: 'image/svg+xml',
+        },
+      },
+      {
+        test: webpackIsomorphicToolsPlugin.regular_expression('images'),
+        loader: 'url-loader',
+        options: {
+          name: `./${ASSETS_DIR}/[name]-[hash].[ext]`,
+          limit: 10240,
+        },
+      },
+```
+
+modules.exportsにpluginsを追記します。
+
+```
+  plugins: [
+    new ExtractTextPlugin('bundle.css'),
+    webpackIsomorphicToolsPlugin.development(),
+  ],
+```
+
+`~/work/src/webpack-isomorphic-tools.js` を追加します。 
+
+```
+const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
+
+module.exports = () => ({
+  webpack_assets_file_path: '../temp/webpack/webpack-assets.json',
+  webpack_stats_file_path: '../temp/webpack/webpack-stats.json',
+
+  assets: {
+    images: {
+      extensions: [
+        'jpeg',
+        'jpg',
+        'png',
+        'gif',
+      ],
+      parser: WebpackIsomorphicToolsPlugin.url_loader_parser,
+    },
+    svg: {
+      extension: 'svg',
+      parser: WebpackIsomorphicToolsPlugin.url_loader_parser,
+    },
+    style_modules: {
+      extensions: ['scss'],
+      filter(module, regex, options, log) {
+        if (options.development) {
+          return WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log);
+        }
+        return regex.test(module.name);
+      },
+      path(module, options, log) {
+        if (options.development) {
+          return WebpackIsomorphicToolsPlugin.style_loader_path_extractor(module, options, log);
+        }
+        return module.name;
+      },
+      parser(module, options, log) {
+        if (options.development) {
+          return WebpackIsomorphicToolsPlugin.css_modules_loader_parser(module, options, log);
+        }
+        return module.source;
+      },
+    },
+  },
+});
+
+```
