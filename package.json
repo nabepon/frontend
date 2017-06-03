@@ -8,7 +8,7 @@
     "lint-fix": "eslint \"src/**/*.js\" --fix",
     "stylelint": "stylelint \"src/**/*.scss\"",
     "stylefmt": "stylefmt -r \"src/**/*.scss\"",
-    "build": "cross-env NODE_ENV=production webpack --config ./webpack/dev.config.js",
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack/prod.config.js",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

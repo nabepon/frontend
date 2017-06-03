@@ -776,3 +776,27 @@ pluginにDefinePluginを追加します。
     }),
   ],
 ```
+
+## 本番用webpackを設定
+新規に`./work/webpack/prod.config.js` を作成します。
+ほぼdev.config.jsと同じですが、pluginsだけ以下のように変更します。
+UglifyJsPluginを追加することで、ファイル圧縮をするようになります。
+
+```
+  plugins: [
+    new ExtractTextPlugin('bundle.css'),
+    webpackIsomorphicToolsPlugin,
+    new webpack.DefinePlugin({
+      __DEVELOPMENT__: false,
+    }),
+    new webpack.optimize.UglifyJsPlugin(),
+  ],
+```
+
+次に、package.jsonのbuildコマンドを、本番用の設定を読むように変更します。
+
+```
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack/dev.config.js",
+    ↓
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack/prod.config.js",
+```
