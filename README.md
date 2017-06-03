@@ -712,3 +712,26 @@ strip_root=true
 
 ### エディタにflowtypeを設定
 エディタごとに設定方法はことなりますので、調べて設定しておいてください。
+
+## ESLintの修正
+ここまでで開発環境の基本的な所は終わりました。
+最後にlintを掛けて、エラーを修正します。
+
+```
+npm run stylelint
+npm run lint-fix
+```
+
+`npm run stylelint` の方はエラーが出ませんでした。
+`npm run lint-fix` ではエラーが出たので修正していきます。
+
+エラー項目 | 内容 | 対応
+---|---|---
+react/prefer-stateless-function | renderしか持たない場合、classではなくfunctionにする | 厳しすぎるのでoff
+react/jsx-filename-extension | jsxが含まれるファイルの拡張子は.jsxにする | 厳しすぎるのでoff
+space-before-blocks | `{` の前にスペースが必要 | `npm run lint-fix` で自動修正を掛ける
+no-shadow | 変素を上書きしているとエラー | 変数名被りが原因なので手動修正
+no-console | console.xxxが使われていると警告 | サンプルコードなので、ignoreで対応
+import/no-extraneous-dependencies | webpackの設定ファイルがdevDependenciesのpackageをimport | 開発用なのでoff
+
+詳しくはgitの差分を参照してください。

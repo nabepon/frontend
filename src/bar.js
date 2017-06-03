@@ -8,10 +8,10 @@ class Bar extends Component {
   }
 }
 
-export default function app(){
-  const app = document.querySelector('#app');
+export default function app() {
+  const dest = document.querySelector('#app');
   ReactDOM.render(
     <Bar />,
-    app,
+    dest,
   );
 }

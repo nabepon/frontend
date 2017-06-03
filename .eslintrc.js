@@ -18,5 +18,14 @@ module.exports = {
     "jsx-a11y",
     "import",
     "flowtype"
-  ]
+  ],
+  "rules": {
+    "react/prefer-stateless-function": "off",
+    "react/jsx-filename-extension": "off",
+    "import/no-extraneous-dependencies": ["error", {
+      devDependencies: [
+        "**/webpack/**",
+      ],
+    }],
+  }
 };
