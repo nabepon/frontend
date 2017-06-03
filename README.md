@@ -709,3 +709,6 @@ module.name_mapper='.*\(.scss\)' -> 'CSSModule'
 module.system=haste
 strip_root=true
 ```
+
+### エディタにflowtypeを設定
+エディタごとに設定方法はことなりますので、調べて設定しておいてください。
