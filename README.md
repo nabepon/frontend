@@ -662,3 +662,13 @@ module.exports = () => ({
 });
 
 ```
+
+### CSS Modulesの動作確認
+
+CSS Modulesが使えているか確認します。
+以下のコマンドを実行してブラウザで `http://localhost:9000/` を開き、 
+Barの背景がグレーになっていれば成功です。
+
+```
+npm start
+```
