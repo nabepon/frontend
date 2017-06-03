@@ -685,3 +685,27 @@ propTypesの代替としてflowtypeを使うのが主流になっています。
 ```
 npm install --save-dev flowtype flow-bin
 ```
+
+### flowtypeの設定ファイル作成
+
+以下のコマンドを実行し、`~/work/.flowconfig` を作成します。
+
+```
+node_modules/.bin/flow init
+```
+
+作成された `~/work/.flowconfig` を以下のように変更します。
+
+```
+[ignore]
+<PROJECT_ROOT>/node_modules/.*
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper='.*\(.scss\)' -> 'CSSModule'
+module.system=haste
+strip_root=true
+```

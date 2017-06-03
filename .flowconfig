@@ -1,0 +1,11 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/.*
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper='.*\(.scss\)' -> 'CSSModule'
+module.system=haste
+strip_root=true
