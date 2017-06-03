@@ -672,3 +672,16 @@ Barの背景がグレーになっていれば成功です。
 ```
 npm start
 ```
+
+## flowtypeの追加
+flowtypeはjsに型を追加するライブラリです。
+ReactはpropTypesという型チェック機能がありますが、
+propTypesの代替としてflowtypeを使うのが主流になっています。
+
+### flowtypeのインストール
+
+以下のコマンドを実行し、flowtypeをインストールします。
+
+```
+npm install --save-dev flowtype flow-bin
+```
