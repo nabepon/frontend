@@ -20,11 +20,14 @@ module.exports = {
     "flowtype"
   ],
   "rules": {
+    "no-underscore-dangle": "off",
     "react/prefer-stateless-function": "off",
     "react/jsx-filename-extension": "off",
     "import/no-extraneous-dependencies": ["error", {
       devDependencies: [
         "**/webpack/**",
+        "**/test/**",
+        "**/*.test.js",
       ],
     }],
   }

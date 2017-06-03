@@ -800,3 +800,71 @@ UglifyJsPluginを追加することで、ファイル圧縮をするようにな
     ↓
     "build": "cross-env NODE_ENV=production webpack --config ./webpack/prod.config.js",
 ```
+
+## test環境構築
+まだテストするコードはありませんが、テストできる環境を先に作ってしまいます。
+
+テストに必要な主なパッケージをインストールします。
+
+```
+npm install --save-dev babel-register mocha moxios jsdom sinon enzyme css-modules-require-hook power-assert nyc react-addons-test-utils rewire
+```
+
+次に、package.jsonにtest用のコマンドを追加します。
+
+```
+    "test-file": "cross-env NODE_ENV=test mocha --compilers js:babel-register --require src/test/test.js",
+    "test": "cross-env NODE_ENV=test mocha --compilers js:babel-register --require src/test/test.js --recursive \"src/**/*.test.js\"",
+    "cover": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-register --require src/test/test.js --recursive \"src/**/*.test.js\""
+```
+
+* `npm run test-file xxxx.js` : ファイル単体のテストを実行します。
+* `npm run test` : *.test.js という名前のテストを全て実行します。
+* `npm run cover` : testのカバレッジを出します。htmlがcoverageに出力されます。
+
+テストする前に実行するファイルを用意します。
+`~/work/src/app/test.js` を追加します。
+
+```
+import hook from 'css-modules-require-hook';
+import sass from 'node-sass';
+import { JSDOM } from 'jsdom';
+
+const { window } = new JSDOM('<!doctype html><html><body id="app"></body></html>');
+global.window = window;
+global.document = window.document;
+global.navigator = { userAgent: 'node.js' };
+
+global.__DEVELOPMENT__ = false;
+
+hook({
+  extensions: ['.scss'],
+  preprocessCss: data => sass.renderSync({ data }).css,
+});
+```
+
+eslintのルールを修正しておきます。  
+`no-underscore-dangle` をOFFにし
+
+```
+    "no-underscore-dangle": "off",
+```
+
+`import/no-extraneous-dependencies` をtest用のコードにかからないように設定します。
+
+```
+    "import/no-extraneous-dependencies": ["error", {
+      devDependencies: [
+        "**/webpack/**",
+        "**/test/**",
+        "**/*.test.js",
+      ],
+    }],
+```
+
+testのカバレッジレポートをignoreしておきます。
+
+```
+coverage/
+.nyc_output/
+```
