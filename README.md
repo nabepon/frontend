@@ -868,3 +868,37 @@ testのカバレッジレポートをignoreしておきます。
 coverage/
 .nyc_output/
 ```
+
+## CircleCI連携
+ローカルでのlintとtestを忘れても問題ないように、  
+CIでlintとtestの実行を行うようにします。
+
+`~/work/circle.yml` を追加します。
+
+```
+machine:
+  node:
+    version: "8.0.0"
+test:
+  override:
+    - npm run lint
+    - npm run stylelint
+    - npm run cover
+    - npm test
+  post:
+    - mv coverage $CIRCLE_ARTIFACTS
+```
+
+CircleCIへの登録をします。  
+https://circleci.com/  
+Sign Up > Start with GitHub またはStart with Bitbucket で登録します。  
+ログイン後、PROJECTSタブ から自分のアカウント、プロジェクトを辿っていき、ビルドしたいプロジェクトをビルドします。  
+
+これで、今後はコミット履歴やプルリクにテストが成功したか表示されるようになります。  
+終了後に`mv coverage $CIRCLE_ARTIFACTS`をしているので、これによって  
+各ビルドのArtifactsからテストのカバレッジ結果も見れるようになっています。  
+
+また、簡単にslack連携もすることができるので、余裕があったら試してみてください。
+各プロジェクトの歯車アイコン > Chat Notifications > slackから設定を行うことで、ビルドが終わったタイミングでslackに通知することができます。
+
+

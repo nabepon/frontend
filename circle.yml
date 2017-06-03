@@ -1,0 +1,11 @@
+machine:
+  node:
+    version: "8.0.0"
+test:
+  override:
+    - npm run lint
+    - npm run stylelint
+    - npm run cover
+    - npm test
+  post:
+    - mv coverage $CIRCLE_ARTIFACTS
