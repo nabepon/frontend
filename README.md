@@ -497,3 +497,14 @@ app();
 ```
 npm start
 ```
+
+## CSS Modulesの設定
+CSS Modulesを使えるようにします。
+
+### CSS Modulesのインストール
+
+以下のコマンドを実行し、CSS Modulesに必要なものをインストールします。
+
+```
+npm install --save-dev webpack-isomorphic-tools node-sass extract-text-webpack-plugin style-loader css-loader sass-loader postcss-loader url-loader autoprefixer autoprefixer-loader
+```
