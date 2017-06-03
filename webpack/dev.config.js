@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const webpack = require('webpack');
 
 const BUILD_ROOT = path.join(__dirname, '../build');
 const SRC_ROOT = path.join(__dirname, '../src');
@@ -102,5 +103,8 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin('bundle.css'),
     webpackIsomorphicToolsPlugin.development(),
+    new webpack.DefinePlugin({
+      __DEVELOPMENT__: true,
+    }),
   ],
 };

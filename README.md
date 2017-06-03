@@ -754,3 +754,25 @@ package.jsonのbuildとstartに先頭に`cross-env NODE_ENV=xxx`を追加しま�
     "build": "cross-env NODE_ENV=production webpack --config ./webpack/dev.config.js",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.js",
 ```
+
+## 開発用webpackを設定
+webpackの設定を開発用と本番用に分けていきます。
+`./work/webpack/dev.config.js` を変更します。
+
+まずwebpackを読み込みます。
+
+```
+const webpack = require('webpack');
+```
+
+pluginにDefinePluginを追加します。
+
+```
+  plugins: [
+    new ExtractTextPlugin('bundle.css'),
+    webpackIsomorphicToolsPlugin.development(),
+    new webpack.DefinePlugin({
+      __DEVELOPMENT__: true,
+    }),
+  ],
+```
