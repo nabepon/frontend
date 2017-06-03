@@ -735,3 +735,22 @@ no-console | console.xxxが使われていると警告 | サンプルコード�
 import/no-extraneous-dependencies | webpackの設定ファイルがdevDependenciesのpackageをimport | 開発用なのでoff
 
 詳しくはgitの差分を参照してください。
+
+# リリース環境構築
+これまでは開発をスタートを始めるための環境構築を行ってきました。
+ここではリリースに向けて必要になる環境を作っていきます。
+
+## 環境変数の設定
+開発用と本番用で環境変数を変更します。
+windowsとmacでどちらでも対応できるようにするため、cross-envをインストールします。
+
+```
+npm install --save-dev cross-env
+```
+
+package.jsonのbuildとstartに先頭に`cross-env NODE_ENV=xxx`を追加します。
+
+```
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack/dev.config.js",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.js",
+```

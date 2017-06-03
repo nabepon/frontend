@@ -8,8 +8,8 @@
     "lint-fix": "eslint \"src/**/*.js\" --fix",
     "stylelint": "stylelint \"src/**/*.scss\"",
     "stylefmt": "stylefmt -r \"src/**/*.scss\"",
-    "build": "webpack --config ./webpack/dev.config.js",
-    "start": "webpack-dev-server --config ./webpack/dev.config.js",
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack/dev.config.js",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -33,6 +33,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.5.1",
     "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.0.0",
     "css-loader": "^0.28.3",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
