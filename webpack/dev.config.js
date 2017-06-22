@@ -15,7 +15,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: SRC_ROOT,
-  entry: './index.js',
+  entry: './app/client.js',
   output: {
     path: BUILD_ROOT,
     filename: 'bundle.js',

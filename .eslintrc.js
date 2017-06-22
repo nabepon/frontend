@@ -28,7 +28,16 @@ module.exports = {
         "**/webpack/**",
         "**/test/**",
         "**/*.test.js",
+        "**/*-test.js",
+        "**/test.js",
       ],
     }],
+    "consistent-return": "off",
+    "react/no-unused-prop-types": "off",
+    "no-shadow": "off",
+    "react/prop-types": "off",
+    "max-len": "off",
+    "no-mixed-operators": "off",
+    "no-use-before-define": "off",
   }
 };
