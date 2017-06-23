@@ -1,3 +1,4 @@
+// @flow
 import { createAction, handleActions } from 'redux-actions';
 
 const INIT = 'myApp/billings/INIT';
@@ -7,7 +8,7 @@ export function init() {
   return createAction(INIT)();
 }
 
-export function loadComplete(data) {
+export function loadComplete(data: any) {
   return createAction(LOAD_COMPLETE)(data);
 }
 

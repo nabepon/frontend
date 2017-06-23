@@ -1,7 +1,8 @@
+// @flow
 import React, { Component } from 'react';
 
 export default class PushLink extends Component {
-  handleClick = (e) => {
+  handleClick = (e: MouseEvent) => {
     const { to, onClick } = this.props;
 
     if (onClick) {

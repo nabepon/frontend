@@ -1,3 +1,4 @@
+// @flow
 import off from 'dom-helpers/events/off';
 import on from 'dom-helpers/events/on';
 import scrollLeft from 'dom-helpers/query/scrollLeft';
@@ -43,24 +44,25 @@ export function getHistoryAction() {
 
 // for test
 export class ScrollStorage {
+  state = {};
   constructor() {
-    this.state = '';
+    this.state = {};
   }
-  getItem(key) {
+  getItem(key: string) {
     return this.state[key];
   }
-  setItem(key, val) {
+  setItem(key: string, val: string) {
     if (typeof val === 'string') {
       this.state[key] = val;
     }
   }
   reset() {
-    this.state = '';
+    this.state = {};
   }
 }
 
 // 遷移直前 or 直後にcall
-export function replaceHistoryState(option = {}) {
+export function replaceHistoryState(option: ?Object = {}) {
   const key = createKey();
   setItem(key, [scrollLeft(window), scrollTop(window)]);
   const state = { ...getHistoryState(), key, ...option };

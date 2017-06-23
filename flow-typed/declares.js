@@ -35,6 +35,26 @@ declare module 'babel-polyfill' {
   declare var exports: any;
 }
 
+declare module 'dom-helpers/events/on' {
+  declare var exports: any;
+}
+
+declare module 'dom-helpers/events/off' {
+  declare var exports: any;
+}
+
+declare module 'dom-helpers/query/scrollLeft' {
+  declare var exports: any;
+}
+
+declare module 'dom-helpers/query/scrollTop' {
+  declare var exports: any;
+}
+
+declare module 'component-cookie' {
+  declare var exports: any;
+}
+
 declare var document: document;
 
 declare var window: window;

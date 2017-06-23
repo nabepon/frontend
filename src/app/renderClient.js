@@ -36,7 +36,7 @@ export default async function renderClient(
   ).then(() => {
     // 全てのレンダリング終了後の処理
     if (historyKey !== getHistoryKey()) {
-      return undefined;
+      return;
     }
 
     updateScroll();
@@ -46,7 +46,7 @@ export default async function renderClient(
     console.error(e);
 
     if (historyKey !== getHistoryKey()) {
-      return undefined;
+      return;
     }
 
     // レンダリングエラー対応
@@ -55,7 +55,7 @@ export default async function renderClient(
         ReactDOM.render(<RedBox error={e} />, element);
       }
       window.document.dispatchEvent(new CustomEvent('renderFinish'));
-      return undefined;
+      return;
     }
 
     return handleError(e);

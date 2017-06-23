@@ -1,3 +1,4 @@
+// @flow
 import { createAction, handleActions } from 'redux-actions';
 
 const INIT = 'myApp/sample/INIT';
@@ -8,7 +9,7 @@ export function init() {
   return createAction(INIT)();
 }
 
-export function reflect(data) {
+export function reflect(data: any) {
   return createAction(REFLECT)(data);
 }
 
