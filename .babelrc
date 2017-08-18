@@ -11,7 +11,8 @@
         ]
       }
     }],
-    "react"
+    "react",
+    "babel-preset-power-assert"
   ],
   "plugins": [
     "transform-object-rest-spread",
