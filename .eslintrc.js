@@ -32,6 +32,7 @@ module.exports = {
         "**/test.js",
       ],
     }],
+    "import/prefer-default-export": "off",
     "consistent-return": "off",
     "react/no-unused-prop-types": "off",
     "no-shadow": "off",
