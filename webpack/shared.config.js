@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const HappyPack = require('happypack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
@@ -86,6 +87,7 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('bundle.css'),
+    new LodashModuleReplacementPlugin,
     new HappyPack({
       id: 'js',
       threadPool: happyThreadPool,
