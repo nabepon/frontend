@@ -9,11 +9,15 @@
     "stylelint": "stylelint \"src/**/*.scss\"",
     "stylefmt": "stylefmt -r \"src/**/*.scss\"",
     "flow": "flow",
-    "build": "cross-env NODE_ENV=production webpack --config ./webpack/prod.config.js",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.js",
+    "build": "cross-env NODE_ENV=production npm run clean && webpack --config ./webpack/prod.config.js",
+    "start": "cross-env NODE_ENV=development npm run clean && webpack-dev-server --config ./webpack/dev.config.js",
     "test-file": "cross-env NODE_ENV=test mocha --compilers js:babel-register --require src/app/test.js",
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-register --require src/app/test.js --recursive \"src/**/*.test.js\"",
-    "cover": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-register --require src/app/test.js --recursive \"src/**/*.test.js\""
+    "test-min": "cross-env NODE_ENV=test mocha --reporter min --compilers js:babel-register --require src/app/test.js --recursive \"src/**/*.test.js\"",
+    "cover": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-register --require src/app/test.js --recursive \"src/**/*.test.js\"",
+    "clean": "rimraf build",
+    "fmt": "npm run lint-fix & npm run stylefmt",
+    "precommit": "npm run lint & npm run flow & npm run stylelint & npm run test-min"
   },
   "repository": {
     "type": "git",
@@ -64,6 +68,7 @@
     "react-addons-test-utils": "^15.5.1",
     "redux-mock-store": "^1.2.3",
     "rewire": "^2.5.2",
+    "rimraf": "^2.6.1",
     "sass-loader": "^6.0.5",
     "sinon": "^2.3.2",
     "style-loader": "^0.18.1",
