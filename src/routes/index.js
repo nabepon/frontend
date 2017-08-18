@@ -1,25 +1,20 @@
 // @flow
 import url from 'url';
-import quotes from './quotes';
-import deliveries from './deliveries';
-import billings from './billings';
-import receipts from './receipts';
+import matchPath from 'react-router/matchPath';
+import sample from './sample';
 import error404 from './error404';
+import type { Route, Match } from '../types/routes';
 
-export default async function getRoute(urlStr: string): Promise<{component: Object, loader: Function}> {
-  const path = url.parse(urlStr).path;
+export async function getRoute(urlStr: string): Promise<Route> {
+  // path-to-regexp を使ったmatch処理
+  const { pathname } = url.parse(urlStr);
+  const match = (path): ?Match => matchPath(pathname, path);
 
-  if (path === '/quotes') {
-    return quotes();
-  } else if (path === '/deliveries') {
-    return deliveries();
-  } else if (path === '/billings') {
-    return billings();
-  } else if (path === '/receipts') {
-    return receipts();
-  } else if (path === '/404') {
-    return error404();
+  if (pathname === '/') {
+    return sample();
+  } else if (match('/sam:ple')) {
+    return sample(match('/sam:ple'));
   }
 
-  return quotes();
+  return error404();
 }

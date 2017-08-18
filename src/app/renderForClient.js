@@ -2,24 +2,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RedBox from 'redbox-react';
-import createRoot from './createRoot';
-import { updateScroll, getHistoryKey, getHistoryAction } from '../modules/restore-scroll';
-import { handleError } from '../utils/error';
+import createRootComponent from './createRootComponent';
+import { updateScroll, getHistoryKey, getHistoryAction } from '../modules/identify-history-and-scroll';
+import { isError, handleError } from '../utils/error';
 import type { Store } from '../types';
 
 /**
- * renderClient
+ * renderForClient
  * ブラウザのためのレンダリング処理を担う
  */
-export default async function renderClient(
+export default async function renderForClient(
   store: Store,
   element: HTMLElement,
 ) {
-  window.document.dispatchEvent(new CustomEvent('renderBefore'));
+  window.document.dispatchEvent(new window.CustomEvent('renderBefore'));
   const historyKey = getHistoryKey();
   const history = { ...window.history, action: getHistoryAction() };
   const url = window.location.href;
-  const { loaders, root } = await createRoot(store, url, history);
+  const { loaders, root } = await createRootComponent({ store, url, history });
 
   return Promise.all(
     // mapで逐次レンダリング実行
@@ -29,6 +29,9 @@ export default async function renderClient(
           ReactDOM.render(root, element);
         }
       }).catch((e) => {
+        if (isError(e)) {
+          return Promise.reject(e);
+        }
         e.type = 'RENDER_ERROR';
         return Promise.reject(e);
       })
@@ -40,7 +43,7 @@ export default async function renderClient(
     }
 
     updateScroll();
-    window.document.dispatchEvent(new CustomEvent('renderFinish'));
+    window.document.dispatchEvent(new window.CustomEvent('renderAfter'));
   }).catch((e) => {
     // eslint-disable-next-line no-console
     console.error(e);
@@ -54,7 +57,7 @@ export default async function renderClient(
       if (__DEVELOPMENT__) {
         ReactDOM.render(<RedBox error={e} />, element);
       }
-      window.document.dispatchEvent(new CustomEvent('renderFinish'));
+      window.document.dispatchEvent(new window.CustomEvent('renderAfter'));
       return;
     }
 

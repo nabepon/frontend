@@ -1,33 +1,41 @@
 // @flow
 import 'babel-polyfill';
-import createApp from './createApp';
-import { listenRestoreScroll, replaceHistoryState } from '../modules/restore-scroll/index';
+import 'custom-event-polyfill';
+import App from './App';
+import {
+  listenIdentifyScroll,
+  saveScroll,
+  setHistoryAction,
+} from '../modules/identify-history-and-scroll';
 
 /** app作成 */
 if (!window.__APP__) {
   window.__APP__ = {};
 }
-const app = createApp();
+const app = new App();
 window.__APP__.app = app;
 
 /** scroll復元のためevent処理 */
-listenRestoreScroll();
+listenIdentifyScroll();
 
 /** Reactのレンダリング */
 const updateRender = () => {
   // scroll用のkeyを作成&復元
-  replaceHistoryState(app.firstHistoryState);
-  app.firstHistoryState = null;
+  saveScroll();
 
   // appとdocumentの紐付け
   const container = window.document.querySelector('#app');
   if (container) {
     container.innerHTML = '';
     container.appendChild(app.element);
+    app.render();
+  } else {
+    app.empty();
   }
-
-  app.render();
 };
 window.addEventListener('popstate', updateRender, false);
-window.document.addEventListener('updateRender', updateRender, false);
+window.document.addEventListener('pushLinkClick', () => {
+  setHistoryAction('PUSH');
+  updateRender();
+}, false);
 window.addEventListener('DOMContentLoaded', updateRender, false);

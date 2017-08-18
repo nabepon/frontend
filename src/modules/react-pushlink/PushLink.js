@@ -9,13 +9,16 @@ export default class PushLink extends Component {
       onClick(e);
     }
 
+    // metaKey: command or windowsキー
+    // button: 0 左クリック、1 真ん中クリック、2 右クリック
+    // defaultPrevented: preventDefaultがすでに呼ばれたかどうか
     if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey || e.button !== 0 || e.defaultPrevented === true) {
       return;
     }
 
     e.preventDefault();
-    window.history.pushState({ ...window.history.state, turbolinks: false, action: 'PUSH' }, '', to);
-    window.document.dispatchEvent(new CustomEvent('updateRender'));
+    window.history.pushState({}, '', to);
+    window.document.dispatchEvent(new window.CustomEvent('pushLinkClick'));
   };
 
   render() {

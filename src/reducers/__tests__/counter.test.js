@@ -2,7 +2,7 @@
 /* eslint-disable max-nested-callbacks */
 import { describe, it } from 'mocha';
 import assert from 'power-assert';
-import { testAction } from '../../utils/redux-test';
+import { testAction } from '../../utils/test/testAction';
 import {
   increment,
   decrement,

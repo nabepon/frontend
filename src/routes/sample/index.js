@@ -5,15 +5,16 @@ import SampleLinks from '../../components/SampleLinks';
 import Counter from '../../containers/Counter';
 import { init as initCounter } from '../../reducers/counter';
 import { reflect, init as initSample } from '../../reducers/sample';
-import type { Store } from '../../types';
+import type { LoaderProps, Match } from '../../types/routes';
+import { createError404 } from '../../utils/error';
 
-function loader(store: Store, history: Object) {
+function loader({ store, history }: LoaderProps, match: ?Match) {
   const dispatch = store.dispatch;
-  // eslint-disable-next-line no-console
-  console.log('Quotes loadProps');
-  if (history.action === 'POP') {
+  console.log('sample loadProps'); // eslint-disable-line no-console
+  if (history.action === 'POP' && store.getState().sample.loaded) {
     return Promise.resolve();
   }
+
   return [
     new Promise((resolve) => {
       setTimeout(() => {
@@ -24,10 +25,16 @@ function loader(store: Store, history: Object) {
         resolve();
       }, 400);
     }),
-    new Promise((resolve) => {
+    new Promise((resolve, reject) => {
       setTimeout(() => {
-        dispatch(reflect({ foo: 'Quotes' }));
-        resolve();
+        if (match) {
+          console.log({ match }); // eslint-disable-line no-console
+          dispatch(reflect({ foo: 'Sample' }));
+          reject(createError404());
+        } else {
+          dispatch(reflect({ foo: 'Sample' }));
+          resolve();
+        }
       }, 800);
     }),
   ];
@@ -36,16 +43,15 @@ function loader(store: Store, history: Object) {
 const connector = connect(
   state => ({
     sample: state.sample,
-    syncTurbolinks: state.syncTurbolinks,
   }),
 );
 
-class Quotes extends Component {
+class Sample extends Component {
   render() {
     return (
       <div>
         <SampleLinks />
-        <h3>Quotes</h3>
+        <h3>Sample Page</h3>
         <Counter />
         <pre>
           {!this.props.sample.loaded
@@ -58,7 +64,7 @@ class Quotes extends Component {
   }
 }
 
-export default () => ({
-  component: connector(Quotes),
-  loader,
+export default (match: ?Match) => ({
+  component: connector(Sample),
+  loader: (loaderProps: LoaderProps) => loader(loaderProps, match),
 });
