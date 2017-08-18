@@ -50,7 +50,7 @@
     "eslint-plugin-react": "^7.0.1",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
-    "flow-bin": "^0.46.0",
+    "flow-bin": "^0.52.0",
     "flowtype": "^2.0.0",
     "happypack": "^4.0.0-beta.2",
     "jsdom": "^11.0.0",

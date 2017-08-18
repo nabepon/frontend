@@ -1,7 +1,11 @@
 /* @noflow */
 declare var __DEVELOPMENT__:any;
 
-declare var Turbolinks:any;
+declare var document: document;
+
+declare var window: window;
+
+declare var location: location;
 
 declare module CSSModule {
   declare var exports: { [key: string]: string };
@@ -55,8 +59,18 @@ declare module 'component-cookie' {
   declare var exports: any;
 }
 
-declare var document: document;
+declare module 'react-router/matchPath' {
+  declare var exports: any;
+}
 
-declare var window: window;
+declare module 'sinon' {
+  declare var exports: any;
+}
 
-declare var location: location;
+declare module 'custom-event-polyfill' {
+  declare var exports: any;
+}
+
+declare module 'react-icons' {
+  declare var exports: any;
+}

@@ -7,5 +7,6 @@
 
 [options]
 module.name_mapper='.*\(.scss\)' -> 'CSSModule'
+module.name_mapper='^react-icons/.*' -> 'react-icons'
+module.name_mapper='^lodash/.*' -> 'lodash'
 module.system=haste
-strip_root=true
