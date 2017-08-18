@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const HappyPack = require('happypack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -20,10 +21,14 @@ module.exports = {
   entry: './app/client.js',
   output: {
     path: BUILD_ROOT,
-    filename: 'bundle.js',
+    filename: '[name]-[chunkhash].js',
   },
   module: {
     loaders: [
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -86,8 +91,9 @@ module.exports = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin('bundle.css'),
+    new ExtractTextPlugin('bundle-[chunkhash].css'),
     new LodashModuleReplacementPlugin,
+    new HtmlWebpackPlugin({ template: 'index.html' }),
     new HappyPack({
       id: 'js',
       threadPool: happyThreadPool,

@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
+const request = require('request');
 
 const BUILD_ROOT = path.join(__dirname, '../build');
 const SRC_ROOT = path.join(__dirname, '../src');
@@ -14,6 +15,7 @@ const sharedConfig = require('./shared.config');
 
 module.exports = Object.assign(sharedConfig, {
   devServer: {
+    disableHostCheck: true,
     contentBase: BUILD_ROOT,
     watchContentBase: true,
     compress: true,
@@ -21,11 +23,12 @@ module.exports = Object.assign(sharedConfig, {
     setup(app) {
       app.get('*', (req, res, next) => {
         const url = req.originalUrl;
-        if (url.startsWith(`/${ASSETS_DIR}/`) || url.endsWith('.css') || url.endsWith('.js') || url.endsWith('.json')) {
+        if (url === '/' || url.startsWith(`/${ASSETS_DIR}/`) || url.endsWith('.css') || url.endsWith('.js') || url.endsWith('.json')) {
           next();
           return;
         }
-        fs.readFile(path.join(SRC_ROOT, '/index.html'), 'utf8', (err, data) => {
+
+        request.get({ url: 'http://localhost:9000/' }, (err, response, data) => {
           if (err) throw err;
           res.status(200).send(data);
         });
