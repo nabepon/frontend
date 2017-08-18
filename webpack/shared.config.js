@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const HappyPack = require('happypack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 
@@ -11,6 +12,7 @@ const babelrc = JSON.parse(fs.readFileSync('.babelrc', 'utf8'));
 const browsers = babelrc.presets.find(preset=>preset[0] === 'env')[1].targets.browsers;
 
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools')());
+const happyThreadPool = HappyPack.ThreadPool({size: 3});
 
 module.exports = {
   context: SRC_ROOT,
@@ -22,11 +24,13 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js?$/,
-        exclude: [
-          /node_modules/,
-        ],
-        loader: 'babel-loader',
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'happypack/loader',
+        query: {
+          plugins: ['lodash'],
+          id: 'js',
+        },
       },
       {
         test: /\.scss$/,
@@ -82,5 +86,17 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('bundle.css'),
+    new HappyPack({
+      id: 'js',
+      threadPool: happyThreadPool,
+      loaders: [
+        {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true, // HappyPackとcacheDirectoryを併用すると遅くなるかもしれない
+          },
+        },
+      ],
+    }),
   ],
 };
