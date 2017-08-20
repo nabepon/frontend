@@ -11,6 +11,10 @@ declare module CSSModule {
   declare var exports: { [key: string]: string };
 }
 
+declare module 'redux-thunk' {
+  declare var exports: any;
+}
+
 declare module 'redux-promise' {
   declare var exports: any;
 }

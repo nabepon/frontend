@@ -1,35 +1,38 @@
 // @flow
-import { createAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import type {
   IncrementAction,
   DecrementAction,
 } from '../types/counter';
+import type { ActionCreatorResult } from '../types';
 
 const INIT = 'myApp/counter/INIT';
 const INCREMENT = 'myApp/counter/INCREMENT';
 const DECREMENT = 'myApp/counter/DECREMENT';
 const DECREMENT_REQUEST = 'myApp/counter/DECREMENT_REQUEST';
 
-export function init() {
-  return createAction(INIT)();
+export function init(): ActionCreatorResult {
+  return { type: INIT };
 }
 
-export function increment() {
-  return createAction(INCREMENT)(1);
+export function increment(): ActionCreatorResult {
+  return dispatch => new Promise((resolve) => {
+    setTimeout(() => resolve(dispatch({ type: INCREMENT, payload: 1 })), 200);
+  });
 }
 
-export function decrement() {
+export function decrement(): ActionCreatorResult {
   return [
-    createAction(DECREMENT_REQUEST)(),
+    { type: DECREMENT_REQUEST },
     new Promise((resolve) => {
       setTimeout(() => resolve(
-        createAction(DECREMENT)(1),
+        { type: DECREMENT, payload: 1 },
       ), 1500);
     }),
   ];
 }
 
-function createInitialState() {
+export function createInitialState() {
   return {
     loading: false,
     count: 0,
@@ -54,5 +57,3 @@ export default handleActions({
     count: state.count - action.payload,
   }),
 }, createInitialState());
-
-export const _createInitialState = createInitialState;

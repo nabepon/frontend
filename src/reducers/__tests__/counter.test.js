@@ -6,7 +6,7 @@ import { testAction } from '../../utils/test/testAction';
 import {
   increment,
   decrement,
-  _createInitialState as createInitialState,
+  createInitialState,
 } from '../counter';
 
 describe('src/reducers/counter.js', () => {

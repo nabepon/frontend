@@ -100,11 +100,12 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
-    "redbox-react": "^1.4.2",
     "react-router": "^4.1.1",
     "recompose": "^0.24.0",
+    "redbox-react": "^1.4.2",
     "redux": "^3.7.0",
     "redux-actions": "^2.0.3",
-    "redux-promise": "^0.5.3"
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0"
   }
 }
