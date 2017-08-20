@@ -21,6 +21,7 @@ module.exports = {
   ],
   "rules": {
     "no-underscore-dangle": "off",
+    "arrow-body-style": "off",
     "react/prefer-stateless-function": "off",
     "react/jsx-filename-extension": "off",
     "import/no-extraneous-dependencies": ["error", {
