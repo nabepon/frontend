@@ -10,6 +10,7 @@ export function init() {
 }
 
 export function addTodo(value) {
+  console.log(value)
   if (!value) {
     return { type: '' };
   }
@@ -30,14 +31,13 @@ export function toggleTodo(id) {
 
 function createInitialState() {
   return {
-    lastId: 0,
     todos: [],
   };
 }
 
 export default handleActions({
-  [INIT]: () => ({
-    ...createInitialState(),
+  [INIT]: (state) => ({
+    ...state,
   }),
   [ADD_TODO]: (state, { payload }) => ({
     ...state,

@@ -2,26 +2,33 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SampleLinks from '../../components/SampleLinks';
 import TodoApp from '../../components/TodoApp';
-import * as Actions from '../../reducers/todoServer';
-import { init } from '../../reducers/todoServer';
+import * as ClientActions from '../../reducers/todoClient';
+import * as ServerActions from '../../reducers/todoServer';
 import type { LoaderProps } from '../../types/routes';
+
+function isServer() {
+  return location.search.includes('server=true');
+}
 
 function loader({ store }: LoaderProps) {
   return Promise.resolve(
-    store.dispatch(init()),
+    store.dispatch(isServer() ? ServerActions.init() : ClientActions.init()),
   );
 }
 
 const connector = connect(
   state => ({
-    todo: location.search.includes('server=true') ? state.todoServer : state.todoClient,
+    todo: isServer() ? state.todoServer : state.todoClient,
   }),
-  dispatch => ({
-    actions: {
-      addTodo: (...args) => dispatch(Actions.addTodo(...args)),
-      toggleTodo: (...args) => dispatch(Actions.toggleTodo(...args)),
-    },
-  }),
+  dispatch => {
+    const Actions = isServer() ? ServerActions : ClientActions;
+    return {
+      actions: {
+        addTodo: (...args) => dispatch(Actions.addTodo(...args)),
+        toggleTodo: (...args) => dispatch(Actions.toggleTodo(...args)),
+      },
+    }
+  },
 );
 
 class Index extends Component {
