@@ -1,9 +1,7 @@
 // @flow
 import { combineReducers } from 'redux';
-import counter from './counter';
-import sample from './sample';
+import todo from './todo';
 
 export default combineReducers({
-  counter,
-  sample,
+  todo,
 });
