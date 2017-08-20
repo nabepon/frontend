@@ -17,7 +17,7 @@ export type State = {
 
 export type Store = ReduxStore<State, Dispatch, DispatchAction>;
 
-export type ThunkAction = (dispatch: Dispatch) => DispatchAction
+export type ThunkAction = (dispatch: Dispatch) => PromiseAction
 export type PromiseAction = Promise<DispatchAction>;
 export type ArrayAction = Array<DispatchAction>;
 export type DispatchAction = Actions | ThunkAction | ArrayAction | PromiseAction;
