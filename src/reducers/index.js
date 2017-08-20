@@ -1,7 +1,9 @@
 // @flow
 import { combineReducers } from 'redux';
-import todo from './todo';
+import todoClient from './todoClient';
+import todoServer from './todoServer';
 
 export default combineReducers({
-  todo,
+  todoClient,
+  todoServer,
 });

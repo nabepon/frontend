@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SampleLinks from '../../components/SampleLinks';
-import TodoApp from './TodoApp';
-import * as Actions from '../../reducers/todo';
-import { init } from '../../reducers/todo';
+import TodoApp from '../../components/TodoApp';
+import * as Actions from '../../reducers/todoServer';
+import { init } from '../../reducers/todoServer';
 import type { LoaderProps } from '../../types/routes';
 
 function loader({ store }: LoaderProps) {
@@ -14,7 +14,7 @@ function loader({ store }: LoaderProps) {
 
 const connector = connect(
   state => ({
-    todo: state.todo,
+    todo: location.search.includes('server=true') ? state.todoServer : state.todoClient,
   }),
   dispatch => ({
     actions: {
