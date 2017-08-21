@@ -1,22 +1,22 @@
+// @flow
 import React, { Component } from 'react';
+import Todo from './Todo';
+import type { TodoServerState } from '../../types/todoServer';
+import type { TodoClientState } from '../../types/todoClient';
 
-class Todo extends Component {
-  render() {
-    return (
-      <div>
-        <span>{this.props.value}</span>
-        <input
-          type="checkbox"
-          checked={this.props.status}
-          onChange={() => this.props.toggleTodo(this.props.id)}
-        />
-      </div>
-    );
-  }
+export type TodoAppProps = {
+  todo: TodoServerState | TodoClientState,
+  actions: {
+    addTodo: Function,
+    toggleTodo: Function,
+  },
 }
 
 export default class TodoApp extends Component {
-  handleAddTodo = (e) => {
+  props: TodoAppProps;
+  input: HTMLInputElement;
+
+  handleAddTodo = (e: SyntheticInputEvent) => {
     e.preventDefault();
     this.props.actions.addTodo(this.input.value);
     this.input.value = '';
@@ -27,12 +27,12 @@ export default class TodoApp extends Component {
       <div>
         <div>
           <form onSubmit={this.handleAddTodo} >
-            <input type="text" ref={input => this.input = input} />
-            <input type="submit" value={"追加"} onClick={this.handleAddTodo} />
+            <input type="text" ref={(input) => { this.input = input; }} />
+            <input type="submit" value={'追加'} onClick={this.handleAddTodo} />
           </form>
         </div>
         <div>
-          {this.props.todo.todos.sort((a, b) => b.createTime - a.createTime).map((todo) => (
+          {this.props.todo.todos.sort((a, b) => b.createTime - a.createTime).map(todo => (
             <Todo
               key={todo.id}
               toggleTodo={this.props.actions.toggleTodo}

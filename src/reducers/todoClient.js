@@ -1,20 +1,23 @@
 // @flow
 import { handleActions } from 'redux-actions';
+import type { Dispatch } from '../types';
+import { NOOP } from '../modules/redux-noop';
 
-const INIT = 'myApp/todo/INIT';
-const ADD_TODO = 'myApp/todo/ADD_TODO';
-const TOGGLE_TODO = 'myApp/todo/TOGGLE_TODO';
+const INIT = 'myApp/todoClient/INIT';
+const ADD_TODO = 'myApp/todoClient/ADD_TODO';
+const TOGGLE_TODO = 'myApp/todoClient/TOGGLE_TODO';
 
 export function init() {
   return { type: INIT };
 }
 
-export function addTodo(value) {
-  console.log(value)
+export function addTodo(value: string) {
+  // eslint-disable-next-line no-console
+  console.log(value);
   if (!value) {
-    return { type: '' };
+    return { type: NOOP };
   }
-  return (dispatch, getState) => Promise.resolve().then(() => {
+  return (dispatch: Dispatch) => Promise.resolve().then(() => {
     const todo = {
       value,
       createTime: Date.now(),
@@ -25,7 +28,7 @@ export function addTodo(value) {
   });
 }
 
-export function toggleTodo(id) {
+export function toggleTodo(id: string) {
   return { type: TOGGLE_TODO, payload: id };
 }
 
@@ -36,7 +39,7 @@ function createInitialState() {
 }
 
 export default handleActions({
-  [INIT]: (state) => ({
+  [INIT]: state => ({
     ...state,
   }),
   [ADD_TODO]: (state, { payload }) => ({

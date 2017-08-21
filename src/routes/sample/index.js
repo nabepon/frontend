@@ -1,10 +1,14 @@
+// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import type { Connector } from 'react-redux';
 import SampleLinks from '../../components/SampleLinks';
 import TodoApp from '../../components/TodoApp';
 import * as ClientActions from '../../reducers/todoClient';
 import * as ServerActions from '../../reducers/todoServer';
+import type {Dispatch, State} from '../../types';
 import type { LoaderProps } from '../../types/routes';
+import type { TodoAppProps } from '../../components/TodoApp';
 
 function isServer() {
   return location.search.includes('server=true');
@@ -16,22 +20,24 @@ function loader({ store }: LoaderProps) {
   );
 }
 
-const connector = connect(
-  state => ({
+const connector: Connector<{}, TodoAppProps> = connect(
+  (state: State) => ({
     todo: isServer() ? state.todoServer : state.todoClient,
   }),
-  dispatch => {
+  (dispatch: Dispatch) => {
     const Actions = isServer() ? ServerActions : ClientActions;
     return {
       actions: {
         addTodo: (...args) => dispatch(Actions.addTodo(...args)),
         toggleTodo: (...args) => dispatch(Actions.toggleTodo(...args)),
       },
-    }
+    };
   },
 );
 
 class Index extends Component {
+  props: TodoAppProps;
+
   render() {
     return (
       <div>

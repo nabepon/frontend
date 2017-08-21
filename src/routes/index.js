@@ -13,7 +13,7 @@ export async function getRoute(urlStr: string): Promise<Route> {
   if (pathname === '/') {
     return sample();
   } else if (match('/sam:ple')) {
-    return sample(match('/sam:ple'));
+    return sample();
   }
 
   return error404();
