@@ -13,3 +13,4 @@ https://github.com/nabepon/frontend/commits/env-setup-tutorial
 React+Reduxをベースにしたサンプルがあります。  
 プロジェクトを始めるボイラープレートやplaygroundとして活用できます。  
 https://github.com/nabepon/frontend/tree/starter-kit
+
